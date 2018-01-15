@@ -18,4 +18,4 @@ url = "*"
 slog = "2.1.1"
 
 [dependencies.rustic-core]
-path = "../core"
+git = "https://github.com/rustic-music-player/core"
