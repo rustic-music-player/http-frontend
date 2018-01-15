@@ -1,1 +1,1 @@
-# rustic-mpd-frontend
+# rustic-http-frontend
