@@ -56,7 +56,7 @@ impl Handler for FallbackHandler {
             Err(err) => {
                 match err.response.status {
                     Some(status::NotFound) => {
-                        let file = File::open("app/dist/index.html").unwrap();
+                        let file = File::open(format!("{}/index.html", env!("APP_DIST"))).unwrap();
                         Ok(Response::with((mime!(Text/Html), status::Ok, file)))
                     }
                     _ => Err(err),
