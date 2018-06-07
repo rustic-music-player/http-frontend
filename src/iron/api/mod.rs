@@ -1,5 +1,4 @@
 mod handler;
-mod viewmodels;
 
 use std::sync::Arc;
 use rustic_core::library::SharedLibrary;

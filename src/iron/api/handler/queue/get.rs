@@ -4,7 +4,7 @@ use iron::Handler;
 
 use rustic_core::library::SharedLibrary;
 use rustic_core::player::SharedPlayer;
-use api::viewmodels::TrackModel;
+use viewmodels::TrackModel;
 use std::sync::Arc;
 
 use serde_json;

@@ -6,7 +6,7 @@ use serde_json;
 
 use rustic_core::library::SharedLibrary;
 use rustic_core::player::{SharedPlayer, PlayerState};
-use api::viewmodels::{PlayerModel, TrackModel};
+use viewmodels::{PlayerModel, TrackModel};
 
 pub struct PlayerStateHandler {
     player: SharedPlayer,

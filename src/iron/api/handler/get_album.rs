@@ -4,7 +4,7 @@ use iron::Handler;
 use router::Router;
 
 use rustic_core::library::SharedLibrary;
-use api::viewmodels::AlbumModel;
+use viewmodels::AlbumModel;
 
 use serde_json;
 

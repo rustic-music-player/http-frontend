@@ -3,33 +3,33 @@ use iron::status;
 use iron::Handler;
 
 use rustic_core::library::SharedLibrary;
-use api::viewmodels::AlbumModel;
+use viewmodels::ArtistModel;
 
 use serde_json;
 
-pub struct ListAlbumsHandler {
+pub struct ListArtistsHandler {
     library: SharedLibrary
 }
 
-impl ListAlbumsHandler {
-    pub fn new(library: SharedLibrary) -> ListAlbumsHandler {
-        ListAlbumsHandler {
+impl ListArtistsHandler  {
+    pub fn new(library: SharedLibrary) -> ListArtistsHandler  {
+        ListArtistsHandler  {
             library
         }
     }
 }
 
-impl Handler for ListAlbumsHandler {
+impl Handler for ListArtistsHandler  {
     fn handle(&self, _: &mut Request) -> IronResult<Response> {
-        let albums: Vec<AlbumModel> = self.library
-            .albums
+        let artists: Vec<ArtistModel> = self.library
+            .artists
             .read()
             .unwrap()
             .iter()
             .cloned()
-            .map(|album| AlbumModel::from(album, self.library.clone()))
+            .map(|artist| ArtistModel::from(artist, self.library.clone()))
             .collect();
-        let res = serde_json::to_string(&albums).unwrap();
+        let res = serde_json::to_string(&artists).unwrap();
 
         Ok(Response::with((mime!(Application/Json), status::Ok, res)))
     }

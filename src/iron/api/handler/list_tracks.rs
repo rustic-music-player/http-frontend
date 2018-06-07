@@ -3,7 +3,7 @@ use iron::status;
 use iron::Handler;
 
 use rustic_core::library::SharedLibrary;
-use api::viewmodels::TrackModel;
+use viewmodels::TrackModel;
 
 use serde_json;
 
