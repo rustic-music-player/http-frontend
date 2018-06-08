@@ -24,7 +24,7 @@ fn build_api_app(app: Arc<Rustic>) -> App<Arc<Rustic>> {
         .resource("/player/prev", |r| r.method(Method::POST).f(handler::player_prev))
 }
 
-fn index(req: HttpRequest) -> Result<fs::NamedFile> {
+fn index(_req: HttpRequest) -> Result<fs::NamedFile> {
     Ok(fs::NamedFile::open(format!("{}/index.html", env!("APP_DIST")))?)
 }
 
