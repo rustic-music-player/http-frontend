@@ -1,0 +1,7 @@
+<mat-list>
+    <mat-list-item *ngFor="let track of queue$ | async">
+        <img matListAvatar [src]="track.coverart">
+        <h3 matLine>{{track.title}}</h3>
+        <p matLine>{{track.artist?.name}}</p>
+    </mat-list-item>
+</mat-list>

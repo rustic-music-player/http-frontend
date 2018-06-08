@@ -27,3 +27,8 @@ i.mdi {
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+
+.pull-up-queue {
+    height: calc(100vh - 56px);
+    background: white;
+}

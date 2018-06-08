@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { PlayerService, PlayerState } from './player.service';
-import { Observable, interval } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { interval, Observable } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
 import { Track } from '../library/album.model';
 import { ObservableMedia } from '@angular/flex-layout';
+import { FlexibleConnectedPositionStrategy, Overlay, OverlayPositionBuilder, OverlayRef } from '@angular/cdk/overlay';
 
 @Component({
     selector: 'rms-player',
@@ -12,11 +13,24 @@ import { ObservableMedia } from '@angular/flex-layout';
 })
 export class PlayerComponent implements OnInit {
 
+    private overlayRef: OverlayRef;
+    private positionStrategy: FlexibleConnectedPositionStrategy;
+
+    @ViewChild('queueOverlay')
+    queueOverlay;
+
+    @ViewChild('queueToggle', { read: ElementRef })
+    queueToggle: ElementRef;
+
+    showQueue = false;
+
     playing = false;
     current: Track;
 
     constructor(private player: PlayerService,
-                private media: ObservableMedia) {
+                private media: ObservableMedia,
+                private overlay: Overlay,
+                private positionBuilder: OverlayPositionBuilder) {
     }
 
     ngOnInit() {
@@ -26,13 +40,21 @@ export class PlayerComponent implements OnInit {
                 this.playing = state.playing;
                 this.current = state.current;
             });
+        this.media
+            .subscribe(change => {
+                if (change.mqAlias === 'xs') {
+                    this.closeQueue();
+                }
+            });
     }
 
-    toggle() {
+    toggle($event: MouseEvent) {
+        $event.preventDefault();
+        $event.stopPropagation();
         let observable: Observable<void>;
         if (this.playing) {
             observable = this.player.pause();
-        } else {
+        }else {
             observable = this.player.play();
         }
         observable.subscribe(() => {
@@ -40,26 +62,65 @@ export class PlayerComponent implements OnInit {
         });
     }
 
-    next() {
+    next($event: MouseEvent) {
+        $event.preventDefault();
+        $event.stopPropagation();
         this.player
             .next()
             .subscribe(() => {
             });
     }
 
-    prev() {
+    prev($event: MouseEvent) {
+        $event.preventDefault();
+        $event.stopPropagation();
         this.player
             .prev()
             .subscribe(() => {
             });
     }
 
-    openQueue() {
+    toggleQueue() {
+        if (this.media.isActive('gt-sm')) {
+            if (!this.overlayRef) {
+                this.setupOverlayRef();
+            }
+            if (this.showQueue) {
+                this.overlayRef.detach();
+            }else {
+                this.overlayRef.attach(this.queueOverlay);
+            }
+        }
+        this.showQueue = !this.showQueue;
     }
 
-    openBottomQueue() {
-        if (this.media.isActive('gt-sm')) {
-            return;
+    private closeQueue() {
+        if (this.overlayRef &&
+            this.overlayRef.hasAttached() &&
+            this.showQueue) {
+            this.overlayRef.detach();
+            this.showQueue = false;
         }
+    }
+
+    private setupOverlayRef() {
+        this.positionStrategy = this.positionBuilder
+            .flexibleConnectedTo(this.queueToggle)
+            .withPositions([
+                {
+                    offsetX: 0,
+                    offsetY: -32,
+                    originX: 'end',
+                    originY: 'top',
+                    weight: 1,
+                    overlayX: 'end',
+                    overlayY: 'bottom'
+                }
+            ]);
+        this.overlayRef = this.overlay.create({
+            height: 500,
+            width: 400,
+            positionStrategy: this.positionStrategy
+        });
     }
 }

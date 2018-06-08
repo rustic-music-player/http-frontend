@@ -13,4 +13,8 @@ export class QueueService {
         return this.http.post<void>(`/api/queue/${track.id}`, null);
     }
 
+    get(): Observable<Track[]> {
+        return this.http.get<Track[]>('/api/queue');
+    }
+
 }

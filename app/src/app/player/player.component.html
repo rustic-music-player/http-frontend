@@ -1,30 +1,41 @@
-<mat-toolbar>
+<mat-toolbar (click)="toggleQueue()">
     <mat-toolbar-row fxLayout="row"
-                     fxLayoutAlign="start center"
-                     (click)="openBottomQueue()">
+                     fxLayoutAlign="start center">
         <img class="coverart" [src]="current?.coverart" *ngIf="current?.coverart"/>
         <div class="current-track" fxLayout="column" fxLayoutAlign="center start" fxFlex.gt-sm>
             <span class="mat-body-2">{{current?.title}}</span>
             <span class="mat-body-1">{{current?.artist?.name}}</span>
         </div>
         <div>
-            <button mat-icon-button (click)="prev()" fxHide.xs>
+            <button mat-icon-button (click)="prev($event)" fxHide.xs>
                 <i class="mdi mdi-skip-previous"></i>
             </button>
-            <button mat-icon-button (click)="toggle()">
+            <button mat-icon-button (click)="toggle($event)">
                 <i class="mdi"
                    [class.mdi-play]="!playing"
                    [class.mdi-pause]="playing"></i>
             </button>
-            <button mat-icon-button (click)="next()" fxHide.xs>
+            <button mat-icon-button (click)="next($event)" fxHide.xs>
                 <i class="mdi mdi-skip-next"></i>
             </button>
         </div>
         <div fxFlex fxHide.lt-md></div>
         <div fxHide.lt-md>
-            <button mat-icon-button (click)="openQueue()">
+            <button mat-icon-button
+                    (click)="toggleQueue()"
+                    #queueToggle>
                 <i class="mdi mdi-playlist-play"></i>
             </button>
         </div>
     </mat-toolbar-row>
 </mat-toolbar>
+<div class="pull-up-queue"
+     [fxShow]="showQueue"
+     fxHide.gt-sm>
+    <rms-queue></rms-queue>
+</div>
+<ng-template cdk-portal #queueOverlay="cdkPortal">
+    <mat-card fxFlex style="width: 100%;">
+        <rms-queue></rms-queue>
+    </mat-card>
+</ng-template>
