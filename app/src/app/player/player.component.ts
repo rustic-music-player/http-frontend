@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { PlayerService, PlayerState } from './player.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable, interval } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { Track } from '../library/album.model';
 import { ObservableMedia } from '@angular/flex-layout';
-import 'rxjs/add/observable/interval';
-import 'rxjs/add/operator/switchMap';
 
 @Component({
     selector: 'rms-player',
@@ -21,9 +20,8 @@ export class PlayerComponent implements OnInit {
     }
 
     ngOnInit() {
-        Observable
-            .interval(1000)
-            .switchMap(this.player.getState.bind(this.player))
+        interval(1000)
+            .pipe(switchMap(this.player.getState.bind(this.player)))
             .subscribe((state: PlayerState) => {
                 this.playing = state.playing;
                 this.current = state.current;
@@ -31,7 +29,7 @@ export class PlayerComponent implements OnInit {
     }
 
     toggle() {
-        let observable;
+        let observable: Observable<void>;
         if (this.playing) {
             observable = this.player.pause();
         } else {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Playlist } from './playlist.model';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable()

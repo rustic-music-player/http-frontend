@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { ObservableMedia } from '@angular/flex-layout';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
 import { MatSidenav } from '@angular/material';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'rms-root',
@@ -19,7 +19,7 @@ export class AppComponent {
 
     constructor(private media: ObservableMedia) {
         this.sidebarMode$ = this.media.asObservable()
-            .map(() => {
+            .pipe(map(() => {
                 let isWide = this.media.isActive('gt-sm');
                 if (isWide) {
                     this.sidenav.open();
@@ -27,6 +27,6 @@ export class AppComponent {
                     this.sidenav.close();
                 }
                 return isWide ? 'side' : 'over'
-            });
+            }));
     }
 }

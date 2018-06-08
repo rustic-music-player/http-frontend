@@ -3,7 +3,11 @@ import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {
-    MatButtonModule, MatCardModule, MatGridListModule, MatIconModule, MatListModule,
+    MatButtonModule,
+    MatCardModule,
+    MatGridListModule,
+    MatIconModule,
+    MatListModule,
     MatSidenavModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
