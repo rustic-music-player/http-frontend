@@ -1,0 +1,25 @@
+mod add_queue;
+mod get_album;
+mod get_queue;
+mod list_albums;
+mod list_artists;
+mod list_playlists;
+mod list_tracks;
+mod player_state;
+mod player_play;
+mod player_pause;
+mod player_next;
+mod player_prev;
+
+pub use self::list_albums::list_albums;
+pub use self::list_artists::list_artists;
+pub use self::list_playlists::list_playlists;
+pub use self::list_tracks::list_tracks;
+pub use self::get_album::get_album;
+pub use self::get_queue::get_queue;
+pub use self::player_state::player_state;
+pub use self::player_play::player_play;
+pub use self::player_pause::player_pause;
+pub use self::player_next::player_next;
+pub use self::player_prev::player_prev;
+pub use self::add_queue::add_queue;
