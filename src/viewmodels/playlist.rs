@@ -6,7 +6,8 @@ pub struct PlaylistModel {
     pub id: Option<usize>,
     pub title: String,
     pub tracks: Vec<Track>,
-    pub provider: Provider
+    pub provider: Provider,
+    pub uri: String
 }
 
 impl PlaylistModel {
@@ -15,7 +16,8 @@ impl PlaylistModel {
             id: playlist.id,
             title: playlist.title,
             tracks: playlist.tracks,
-            provider: playlist.provider
+            provider: playlist.provider,
+            uri: playlist.uri
         }
     }
 }

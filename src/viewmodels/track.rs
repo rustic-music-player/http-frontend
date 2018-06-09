@@ -8,7 +8,7 @@ pub struct TrackModel {
     pub artist: Option<Artist>,
     pub album: Option<Album>,
     pub stream_url: String,
-    pub path: String,
+    pub uri: String,
     pub provider: Provider,
     pub coverart: Option<String>,
     pub duration: Option<u64>
@@ -24,7 +24,7 @@ impl TrackModel {
             id: track.id,
             title: track.title,
             stream_url: track.stream_url,
-            path: track.uri,
+            uri: track.uri,
             provider: track.provider,
             coverart: track.coverart,
             duration: track.duration,

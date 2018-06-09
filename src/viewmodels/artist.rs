@@ -5,7 +5,8 @@ pub struct ArtistModel {
     pub id: Option<usize>,
     pub name: String,
     pub albums: Vec<Album>,
-    pub tracks: Vec<Track>
+    pub tracks: Vec<Track>,
+    pub uri: String
 }
 
 impl ArtistModel {
@@ -26,7 +27,8 @@ impl ArtistModel {
             id: artist.id,
             name: artist.name,
             albums,
-            tracks
+            tracks,
+            uri: artist.uri
         }
     }
 }

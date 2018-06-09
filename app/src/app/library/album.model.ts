@@ -8,7 +8,7 @@ export interface Album {
 export interface Track {
     id: number;
     title: string;
-    path: string;
+    uri: string;
     album?: Album;
     artist?: Artist;
     stream_url: string;
