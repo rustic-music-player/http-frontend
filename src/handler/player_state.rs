@@ -7,12 +7,11 @@ use std::sync::Arc;
 
 pub fn player_state(req: HttpRequest<Arc<Rustic>>) -> Result<Json<PlayerModel>, Error> {
     let rustic = req.state();
-    let library = &rustic.library;
     let player = (&rustic.player).lock().unwrap();
     let current = player.queue
         .current()
         .cloned()
-        .map(|track| TrackModel::from(track, Arc::clone(library)));
+        .map(|track| TrackModel::new_with_joins(track, &rustic));
 
     let state = PlayerModel {
         playing: (player.state == PlayerState::Play),

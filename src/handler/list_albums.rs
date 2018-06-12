@@ -13,7 +13,7 @@ pub fn list_albums(req: HttpRequest<Arc<Rustic>>) -> Result<Json<Vec<AlbumModel>
         .unwrap()
         .iter()
         .cloned()
-        .map(|album| AlbumModel::from(album, Arc::clone(library)))
+        .map(|album| AlbumModel::new_with_joins(album, &rustic))
         .collect();
 
     Ok(Json(albums))

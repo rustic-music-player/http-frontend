@@ -14,6 +14,6 @@ pub fn get_album(req: (State<Arc<Rustic>>, Path<AlbumQuery>)) -> Result<Json<Opt
     let library = &rustic.library;
     let album: Option<AlbumModel> = library
         .get_album(&path.album_id)
-        .map(|album| AlbumModel::from(album, Arc::clone(library)));
+        .map(|album| AlbumModel::new_with_joins(album, &rustic));
     Ok(Json(album))
 }

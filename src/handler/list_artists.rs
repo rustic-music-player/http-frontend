@@ -13,7 +13,7 @@ pub fn list_artists(req: HttpRequest<Arc<Rustic>>) -> Result<Json<Vec<ArtistMode
         .unwrap()
         .iter()
         .cloned()
-        .map(|artist| ArtistModel::from(artist, Arc::clone(library)))
+        .map(|artist| ArtistModel::new_with_joins(artist, &rustic))
         .collect();
 
     Ok(Json(artists))

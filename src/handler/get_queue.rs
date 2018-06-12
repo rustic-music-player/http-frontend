@@ -6,7 +6,6 @@ use std::sync::Arc;
 
 pub fn get_queue(req: HttpRequest<Arc<Rustic>>) -> Result<Json<Vec<TrackModel>>, Error> {
     let rustic = req.state();
-    let library = &rustic.library;
     let player = &rustic.player;
     let player = player.lock().unwrap();
     let tracks: Vec<TrackModel> = player
@@ -14,7 +13,8 @@ pub fn get_queue(req: HttpRequest<Arc<Rustic>>) -> Result<Json<Vec<TrackModel>>,
         .tracks
         .iter()
         .cloned()
-        .map(|track| TrackModel::from(track, Arc::clone(library)))        .collect();
+        .map(|track| TrackModel::new_with_joins(track, &rustic))
+        .collect();
 
     Ok(Json(tracks))
 }

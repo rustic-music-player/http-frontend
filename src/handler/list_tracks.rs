@@ -13,7 +13,7 @@ pub fn list_tracks(req: HttpRequest<Arc<Rustic>>) -> Result<Json<Vec<TrackModel>
         .unwrap()
         .iter()
         .cloned()
-        .map(|track| TrackModel::from(track, Arc::clone(library)))
+        .map(|track| TrackModel::new_with_joins(track, &rustic))
         .collect();
 
     Ok(Json(tracks))

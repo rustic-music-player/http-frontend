@@ -7,14 +7,13 @@ use std::sync::Arc;
 pub fn list_playlists(req: HttpRequest<Arc<Rustic>>) -> Result<Json<Vec<PlaylistModel>>, Error> {
     let rustic = req.state();
     let library = &rustic.library;
-    let providers = &rustic.providers;
     let playlists: Vec<PlaylistModel> = library
         .playlists
         .read()
         .unwrap()
         .iter()
         .cloned()
-        .map(|playlist| PlaylistModel::from(playlist, Arc::clone(library), providers.clone()))
+        .map(|playlist| PlaylistModel::from(playlist, &rustic))
         .collect();
 
     Ok(Json(playlists))
