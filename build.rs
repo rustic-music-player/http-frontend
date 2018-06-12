@@ -11,7 +11,7 @@ fn main() {
                        .current_dir(&Path::new("app"))
                        .status()
                        .unwrap();
-    Command::new("npm").args(&["run", "build", "--", "-op", &out_dir])
+    Command::new("npm").args(&["run", "build", "--", "--output-path", &out_dir])
                        .current_dir(&Path::new("app"))
                        .status()
                        .unwrap();
