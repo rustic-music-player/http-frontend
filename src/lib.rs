@@ -8,7 +8,6 @@ extern crate mime;
 #[macro_use]
 extern crate log;
 extern crate actix_web;
-extern crate env_logger;
 extern crate failure;
 #[macro_use]
 extern crate failure_derive;
@@ -30,8 +29,6 @@ pub struct HttpConfig {
 }
 
 pub fn start(config: Option<HttpConfig>, app: Arc<Rustic>) -> thread::JoinHandle<()> {
-    ::std::env::set_var("RUST_LOG", "actix_web=info,rustic_http_frontend=debug");
-    env_logger::init();
     let config = config.unwrap_or(HttpConfig {
         ip: "0.0.0.0".to_owned(),
         port: 8080

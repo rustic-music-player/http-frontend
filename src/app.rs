@@ -44,7 +44,5 @@ pub fn start(config: &HttpConfig, app: Arc<Rustic>) -> Result<()> {
     })
         .bind(format!("{}:{}", config.ip, config.port))?
         .run();
-
-    // info!("[HTTP] Listening on Port {}", config.port);
     Ok(())
 }
