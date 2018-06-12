@@ -6,6 +6,6 @@ use std::sync::Arc;
 pub fn player_next(req: HttpRequest<Arc<Rustic>>) -> Result<Json<()>, Error> {
     let rustic = req.state();
     let mut player = (&rustic.player).lock().unwrap();
-    player.next();
+    player.next()?;
     Ok(Json(()))
 }

@@ -42,7 +42,7 @@ impl AlbumModel {
             .iter()
             .cloned()
             .find(|artist| artist.id == album.artist_id)
-            .map(|artist| ArtistModel::new(artist));
+            .map(ArtistModel::new);
         let coverart = album.coverart(app);
         AlbumModel {
             id: album.id,

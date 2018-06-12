@@ -6,6 +6,6 @@ use std::sync::Arc;
 pub fn player_prev(req: HttpRequest<Arc<Rustic>>) -> Result<Json<()>, Error> {
     let rustic = req.state();
     let mut player = (&rustic.player).lock().unwrap();
-    player.prev();
+    player.prev()?;
     Ok(Json(()))
 }

@@ -1,7 +1,5 @@
 use rustic_core::{Rustic, Track};
 use actix_web::{Json, Path, State, error, Result};
-use failure::Error;
-use viewmodels::AlbumModel;
 use std::sync::Arc;
 
 #[derive(Deserialize)]

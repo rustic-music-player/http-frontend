@@ -7,6 +7,6 @@ pub fn player_play(req: HttpRequest<Arc<Rustic>>) -> Result<Json<()>, Error> {
     debug!("player_play playing");
     let rustic = req.state();
     let mut player = (&rustic.player).lock().unwrap();
-    player.play();
+    player.play()?;
     Ok(Json(()))
 }

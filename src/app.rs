@@ -35,7 +35,7 @@ fn build_static_app() -> App<()> {
         .handler("/", fs::StaticFiles::new(env!("APP_DIST")).default_handler(index))
 }
 
-pub fn start(config: HttpConfig, app: Arc<Rustic>) -> Result<()> {
+pub fn start(config: &HttpConfig, app: Arc<Rustic>) -> Result<()> {
     server::new(move || {
         vec![
             build_api_app(app.clone()).boxed(),

@@ -14,7 +14,6 @@ extern crate failure;
 extern crate failure_derive;
 
 use rustic_core::Rustic;
-use rustic_core::logger::logger;
 
 use std::sync::Arc;
 
@@ -38,6 +37,6 @@ pub fn start(config: Option<HttpConfig>, app: Arc<Rustic>) -> thread::JoinHandle
         port: 8080
     });
     thread::spawn(move|| {
-        app::start(config, app).unwrap();
+        app::start(&config, app).unwrap();
     })
 }
