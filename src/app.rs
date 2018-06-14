@@ -5,23 +5,27 @@ use actix_web::HttpRequest;
 use rustic_core::Rustic;
 use std::sync::Arc;
 use handler;
+use controller;
 
 fn build_api_app(app: Arc<Rustic>) -> App<Arc<Rustic>> {
     App::with_state(app)
         .prefix("/api")
         .middleware(middleware::Logger::default())
-        .resource("/library/albums", |r| r.method(Method::GET).f(handler::list_albums))
-        .resource("/library/albums/{album_id}", |r| r.method(Method::GET).with(handler::get_album))
-        .resource("/library/artists", |r| r.method(Method::GET).f(handler::list_artists))
-        .resource("/library/playlists", |r| r.method(Method::GET).f(handler::list_playlists))
-        .resource("/library/tracks", |r| r.method(Method::GET).f(handler::list_tracks))
-        .resource("/queue", |r| r.method(Method::GET).f(handler::get_queue))
-        .resource("/queue/{track_id}", |r| r.method(Method::POST).with(handler::add_queue))
-        .resource("/player", |r| r.method(Method::GET).f(handler::player_state))
-        .resource("/player/play", |r| r.method(Method::POST).f(handler::player_play))
-        .resource("/player/pause", |r| r.method(Method::POST).f(handler::player_pause))
-        .resource("/player/next", |r| r.method(Method::POST).f(handler::player_next))
-        .resource("/player/prev", |r| r.method(Method::POST).f(handler::player_prev))
+        .resource("/library/albums", |r| r.method(Method::GET).f(controller::library::get_albums))
+        .resource("/library/albums/{album_id}", |r| r.method(Method::GET).with(controller::library::get_album))
+        .resource("/library/artists", |r| r.method(Method::GET).f(controller::library::get_artists))
+        .resource("/library/playlists", |r| r.method(Method::GET).f(controller::library::get_playlists))
+        .resource("/library/tracks", |r| r.method(Method::GET).f(controller::library::get_tracks))
+        .resource("/queue", |r| r.method(Method::GET).f(controller::queue::fetch))
+        .resource("/queue/clear", |r| r.method(Method::POST).f(controller::queue::clear))
+        .resource("/queue/playlist/{playlist_id}", |r| r.method(Method::POST).with(controller::queue::queue_playlist))
+        .resource("/queue/track/{track_id}", |r| r.method(Method::POST).with(controller::queue::queue_track))
+        .resource("/queue/{track_id}", |r| r.method(Method::POST).with(controller::queue::queue_track))
+        .resource("/player", |r| r.method(Method::GET).f(controller::player::player_state))
+        .resource("/player/play", |r| r.method(Method::POST).f(controller::player::control_play))
+        .resource("/player/pause", |r| r.method(Method::POST).f(controller::player::control_pause))
+        .resource("/player/next", |r| r.method(Method::POST).f(controller::player::control_next))
+        .resource("/player/prev", |r| r.method(Method::POST).f(controller::player::control_prev))
 }
 
 fn index(_req: HttpRequest) -> Result<fs::NamedFile> {

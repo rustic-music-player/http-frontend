@@ -21,6 +21,7 @@ use std::thread;
 mod app;
 mod handler;
 mod viewmodels;
+mod controller;
 
 #[derive(Deserialize, Clone)]
 pub struct HttpConfig {
