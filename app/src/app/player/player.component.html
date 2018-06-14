@@ -1,4 +1,4 @@
-<mat-toolbar (click)="toggleQueue()">
+<mat-toolbar>
     <mat-toolbar-row fxLayout="row"
                      fxLayoutAlign="start center">
         <img class="coverart" [src]="current?.coverart" *ngIf="current?.coverart"/>
@@ -35,7 +35,7 @@
     <rms-queue></rms-queue>
 </div>
 <ng-template cdk-portal #queueOverlay="cdkPortal">
-    <mat-card fxFlex style="width: 100%;">
+    <mat-card fxFlex style="width: 100%; overflow: auto;">
         <rms-queue></rms-queue>
     </mat-card>
 </ng-template>
