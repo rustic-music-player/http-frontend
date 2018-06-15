@@ -1,0 +1,9 @@
+<div fxLayout="row">
+    <div *ngFor="let provider of providers"
+         class="chip {{provider.name}}"
+         [class.selected]="provider.selected"
+         (click)="toggle(provider.name)">
+        <mat-icon [svgIcon]="(provider.name | provider).icon"></mat-icon>
+        <span>{{(provider.name | provider).label}}</span>
+    </div>
+</div>

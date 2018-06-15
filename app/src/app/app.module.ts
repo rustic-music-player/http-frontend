@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -12,6 +12,8 @@ import { PlayerModule } from './player/player.module';
 import { LibraryModule } from './library/library.module';
 import { QueueService } from './queue.service';
 import { PlaylistsModule } from './playlists/playlists.module';
+import { SearchModule } from './search/search.module';
+import { MatIconRegistry } from '@angular/material/icon';
 
 @NgModule({
     declarations: [
@@ -26,7 +28,8 @@ import { PlaylistsModule } from './playlists/playlists.module';
         SharedModule,
         PlayerModule,
         LibraryModule,
-        PlaylistsModule
+        PlaylistsModule,
+        SearchModule
     ],
     providers: [
         QueueService
@@ -34,4 +37,7 @@ import { PlaylistsModule } from './playlists/playlists.module';
     bootstrap: [AppComponent]
 })
 export class AppModule {
+    constructor(matIconRegistry: MatIconRegistry, domSanitizer: DomSanitizer){
+        matIconRegistry.addSvgIconSet(domSanitizer.bypassSecurityTrustResourceUrl('../assets/mdi.svg'));
+    }
 }

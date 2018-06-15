@@ -1,0 +1,5 @@
+<img [src]="album.imageUrl">
+<span class="title">{{album.name}}</span>
+<span class="artist">{{album.artist?.name}}</span>
+<mat-icon [svgIcon]="(album.provider | provider).icon"
+          [class]="album.provider"></mat-icon>

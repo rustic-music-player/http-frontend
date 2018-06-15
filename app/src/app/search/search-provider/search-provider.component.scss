@@ -1,0 +1,38 @@
+@import '../../providers';
+
+$height: 24px;
+
+@mixin provider($color) {
+    &.selected {
+        background: $color;
+        color: white;
+    }
+}
+
+.chip {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: $height;
+    border-radius: $height;
+    padding: 6px 16px 6px 12px;
+    margin-right: 8px;
+    cursor: pointer;
+    background: #e1e1e1;
+    color: rgba(0, 0, 0, 0.54);
+    white-space: nowrap;
+
+    &:hover {
+        background: darken(#e1e1e1, 5%);
+    }
+
+    @each $name, $value in $providers {
+        &.#{$name} {
+            @include provider($value);
+        }
+    }
+
+    mat-icon {
+        margin-right: 4px;
+    }
+}
