@@ -2,10 +2,16 @@
 
 $height: 24px;
 
+$highlight: #e0e0e0;
+$default: #d9d9d9;
+
 @mixin provider($color) {
     &.selected {
-        background: $color;
-        color: white;
+        background: $highlight;
+        
+        mat-icon {
+            fill: $color;
+        }
     }
 }
 
@@ -18,13 +24,9 @@ $height: 24px;
     padding: 6px 16px 6px 12px;
     margin-right: 8px;
     cursor: pointer;
-    background: #e1e1e1;
+    background: $default;
     color: rgba(0, 0, 0, 0.54);
     white-space: nowrap;
-
-    &:hover {
-        background: darken(#e1e1e1, 5%);
-    }
 
     @each $name, $value in $providers {
         &.#{$name} {
