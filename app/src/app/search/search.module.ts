@@ -6,6 +6,7 @@ import { SharedModule } from '../shared/shared.module';
 import { SearchProviderComponent } from './search-provider/search-provider.component';
 import { SearchArtistComponent } from './search-artist/search-artist.component';
 import { SearchAlbumComponent } from './search-album/search-album.component';
+import { SearchTrackComponent } from './search-track/search-track.component';
 
 const routes: Routes = [
     {
@@ -24,7 +25,8 @@ const routes: Routes = [
         SearchComponent,
         SearchProviderComponent,
         SearchArtistComponent,
-        SearchAlbumComponent
+        SearchAlbumComponent,
+        SearchTrackComponent
     ]
 })
 export class SearchModule {

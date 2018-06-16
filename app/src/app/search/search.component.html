@@ -1,17 +1,35 @@
 <rms-search-provider></rms-search-provider>
-<h2>Artists</h2>
-<div fxLayout="row">
-    <rms-search-artist *ngFor="let artist of artists"
-                       [artist]="artist">
-    </rms-search-artist>
+<div fxLayout="row" fxFill fxLayoutAlign="center center" *ngIf="pending$ | async">
+    <mat-progress-spinner mode="indeterminate">
+    </mat-progress-spinner>
 </div>
-<h2>Albums</h2>
-<div fxLayout="row">
-    <rms-search-album *ngFor="let album of albums"
-                      [album]="album">
-    </rms-search-album>
-</div>
-<h2>Playlists</h2>
-<div fxLayout="row">
-</div>
-<h2>Tracks</h2>
+<ng-container *ngIf="results$ | async as results">
+    <ng-container *ngIf="results.artists.length">
+        <h2>Artists</h2>
+        <div fxLayout="row">
+            <rms-search-artist *ngFor="let artist of artists"
+                               [artist]="artist">
+            </rms-search-artist>
+    </div>
+    </ng-container>
+    <ng-container *ngIf="results.albums.length">
+        <h2>Albums</h2>
+        <div fxLayout="row">
+            <rms-search-album *ngFor="let album of albums"
+                              [album]="album">
+            </rms-search-album>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="results.playlists.length">
+        <h2>Playlists</h2>
+        <div fxLayout="row">
+        </div>
+    </ng-container>
+    <ng-container *ngIf="results.tracks.length">
+        <h2>Tracks</h2>
+        <mat-list>
+            <rms-search-track *ngFor="let track of results.tracks" [track]="track"></rms-search-track>
+        </mat-list>
+    </ng-container>
+</ng-container>
+

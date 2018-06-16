@@ -11,6 +11,7 @@ extern crate actix_web;
 extern crate failure;
 #[macro_use]
 extern crate failure_derive;
+extern crate rayon;
 
 use rustic_core::Rustic;
 

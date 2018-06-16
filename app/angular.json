@@ -22,7 +22,7 @@
             ],
             "styles": [
               "src/styles.scss",
-              "node_modules/mdi/scss/materialdesignicons.scss"
+              "node_modules/@mdi/font/scss/materialdesignicons.scss"
             ],
             "scripts": []
           },

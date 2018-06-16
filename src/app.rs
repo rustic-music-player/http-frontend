@@ -4,7 +4,6 @@ use actix_web::http::Method;
 use actix_web::HttpRequest;
 use rustic_core::Rustic;
 use std::sync::Arc;
-use handler;
 use controller;
 
 fn build_api_app(app: Arc<Rustic>) -> App<Arc<Rustic>> {
@@ -26,6 +25,7 @@ fn build_api_app(app: Arc<Rustic>) -> App<Arc<Rustic>> {
         .resource("/player/pause", |r| r.method(Method::POST).f(controller::player::control_pause))
         .resource("/player/next", |r| r.method(Method::POST).f(controller::player::control_next))
         .resource("/player/prev", |r| r.method(Method::POST).f(controller::player::control_prev))
+        .resource("/search", |r| r.method(Method::GET).with(controller::search::search))
 }
 
 fn index(_req: HttpRequest) -> Result<fs::NamedFile> {

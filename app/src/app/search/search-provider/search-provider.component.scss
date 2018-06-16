@@ -8,6 +8,7 @@ $default: #d9d9d9;
 @mixin provider($color) {
     &.selected {
         background: $highlight;
+        border-color: $color;
         
         mat-icon {
             fill: $color;
@@ -27,6 +28,7 @@ $default: #d9d9d9;
     background: $default;
     color: rgba(0, 0, 0, 0.54);
     white-space: nowrap;
+    border: 2px solid $default;
 
     @each $name, $value in $providers {
         &.#{$name} {

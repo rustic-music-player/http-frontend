@@ -1,0 +1,27 @@
+@import "../../providers";
+
+$radius: 20px;
+
+.badge {
+    width: $radius;
+    height: $radius;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e0e0e0;
+    border: 3px solid #fafafa;
+    position: absolute;
+    top: 32px;
+    left: 40px;
+
+    .i {
+        font-size: 14px;
+    }
+}
+
+@each $name, $value in $providers {
+    .#{$name} {
+        color: $value;
+    }
+}

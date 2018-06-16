@@ -14,6 +14,7 @@ url = "1.7"
 log = "0.4"
 failure = "0.1"
 failure_derive = "0.1"
+rayon = "1.0"
 
 [dependencies.rustic-core]
 git = "https://github.com/rustic-music-player/core"

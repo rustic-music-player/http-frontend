@@ -1,0 +1,8 @@
+<mat-list-item>
+    <img [src]="track.coverart" matListAvatar>
+    <span class="badge {{track.provider}}">
+        <i class="mdi mdi-{{(track.provider | provider).icon}}">
+        </i>
+    </span>
+    <h3 mat-line>{{track.title}}</h3>
+</mat-list-item>
