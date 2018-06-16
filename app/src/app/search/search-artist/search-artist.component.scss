@@ -13,7 +13,8 @@ $border-width: 6px;
     @include mat-elevation(4);
 }
 
-img {
+img,
+.placeholder {
     @include mat-elevation(2);
 
     transition: all 0.15s ease-in-out;
@@ -24,6 +25,15 @@ img {
     margin-bottom: 4px;
     object-fit: cover;
     cursor: pointer;
+}
+
+.placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #dddddd;
+    color: #ffffff;
+    font-size: 64px;
 }
 
 span {

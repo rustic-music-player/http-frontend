@@ -1,2 +1,5 @@
-<img [src]="artist.imageUrl">
+<img [src]="artist.image" *ngIf="artist.image">
+<div class="placeholder" *ngIf="!artist.image">
+    <i class="mdi mdi-account"></i>
+</div>
 <span>{{artist.name}}</span>

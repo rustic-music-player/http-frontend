@@ -1,4 +1,5 @@
 import { Component, Input, HostBinding } from '@angular/core';
+import { Album } from '../../library/album.model';
 
 @Component({
     selector: 'rms-search-album',
@@ -8,10 +9,10 @@ import { Component, Input, HostBinding } from '@angular/core';
 export class SearchAlbumComponent {
 
     @Input()
-    album: any;
+    album: Album;
 
     @HostBinding('title')
     get title() {
-        return this.album.name;
+        return this.album.title;
     }
 }

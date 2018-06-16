@@ -22,7 +22,7 @@ impl TrackModel {
     pub fn new_with_joins(track: Track, app: &Arc<Rustic>) -> TrackModel {
         let artist = track.artist_id
             .and_then(|id| app.library.get_artist(&id))
-            .map(ArtistModel::new);
+            .map(|artist| ArtistModel::new(artist, app));
         let album = track.album_id
             .and_then(|id| app.library.get_album(&id))
             .map(|album| AlbumModel::new(album, app));

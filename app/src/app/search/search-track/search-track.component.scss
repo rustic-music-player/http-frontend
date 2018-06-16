@@ -20,6 +20,12 @@ $radius: 20px;
     }
 }
 
+:host mat-list-item mat-icon {
+    padding: 8px;
+    background: #dddddd;
+    color: #ffffff;
+}
+
 @each $name, $value in $providers {
     .#{$name} {
         color: $value;

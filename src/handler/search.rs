@@ -1,5 +1,5 @@
 use failure::Error;
-use rustic_core::{Rustic, Track, Playlist};
+use rustic_core::{Rustic, Track, Playlist, Album, Artist};
 use rustic_core::provider::ProviderItem;
 use std::sync::Arc;
 use viewmodels::*;
@@ -7,24 +7,44 @@ use rayon::prelude::*;
 
 pub fn search(query: &str, rustic: &Arc<Rustic>) -> Result<SearchResults, Error> {
     let providers = &rustic.providers;
-    trace!("search {} in {:?}", query, &providers);
+    trace!("search {}", query);
 
-    let results: Vec<ProviderItem> = providers
+    let results = providers
         .iter()
-        .flat_map(|provider| provider.read().unwrap().search(query.to_string()))
-        .collect();
+        .map(|provider| provider.read().unwrap().search(query.to_string()))
+        .collect::<Result<Vec<_>, Error>>()?;
 
     let tracks: Vec<TrackModel> = results
-        .into_par_iter()
+        .par_iter()
+        .cloned()
+        .flat_map(|items| items)
         .filter(|result| result.is_track())
         .map(Track::from)
         .map(|track| TrackModel::new_with_joins(track, rustic))
         .collect();
 
+    let albums: Vec<AlbumModel> = results
+        .par_iter()
+        .cloned()
+        .flat_map(|items| items)
+        .filter(|result| result.is_album())
+        .map(Album::from)
+        .map(|album| AlbumModel::new_with_joins(album, rustic))
+        .collect();
+
+    let artists: Vec<ArtistModel> = results
+        .par_iter()
+        .cloned()
+        .flat_map(|items| items)
+        .filter(|result| result.is_artist())
+        .map(Artist::from)
+        .map(|artist| ArtistModel::new_with_joins(artist, rustic))
+        .collect();
+
     Ok(SearchResults {
         tracks,
-        albums: vec![],
-        artists: vec![],
+        albums,
+        artists,
         playlists: vec![]
     })
 }

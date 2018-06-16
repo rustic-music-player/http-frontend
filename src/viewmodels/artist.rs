@@ -9,7 +9,8 @@ pub struct ArtistModel {
     pub name: String,
     pub albums: Option<Vec<AlbumModel>>,
     pub tracks: Option<Vec<TrackModel>>,
-    pub uri: String
+    pub uri: String,
+    pub image: Option<String>
 }
 
 impl ArtistModel {
@@ -28,22 +29,26 @@ impl ArtistModel {
             .cloned()
             .map(|track| TrackModel::new(track, app))
             .collect();
+        let image = artist.image(app);
         ArtistModel {
             id: artist.id,
             name: artist.name,
             albums: Some(albums),
             tracks: Some(tracks),
-            uri: artist.uri
+            uri: artist.uri,
+            image
         }
     }
 
-    pub fn new(artist: Artist) -> ArtistModel {
+    pub fn new(artist: Artist, app: &Arc<Rustic>) -> ArtistModel {
+        let image = artist.image(app);
         ArtistModel {
             id: artist.id,
             name: artist.name,
             albums: None,
             tracks: None,
-            uri: artist.uri
+            uri: artist.uri,
+            image
         }
     }
 }

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Album, Artist, Track } from '../library/album.model';
 
 export interface SearchResults {
-    tracks: any[],
-    albums: any[],
-    artists: any[],
+    tracks: Track[],
+    albums: Album[],
+    artists: Artist[],
     playlists: any[]
 }
 
@@ -14,7 +15,7 @@ const EMPTY_RESULTS: SearchResults = {
     albums: [],
     artists: [],
     playlists: []
-}
+};
 
 @Injectable({
     providedIn: 'root'

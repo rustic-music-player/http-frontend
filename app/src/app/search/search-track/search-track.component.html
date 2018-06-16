@@ -1,5 +1,6 @@
 <mat-list-item>
-    <img [src]="track.coverart" matListAvatar>
+    <img [src]="track.coverart" matListAvatar *ngIf="track.coverart">
+    <mat-icon svgIcon="music-circle" matListIcon *ngIf="!track.coverart"></mat-icon>
     <span class="badge {{track.provider}}">
         <i class="mdi mdi-{{(track.provider | provider).icon}}">
         </i>
