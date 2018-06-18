@@ -6,10 +6,10 @@ use viewmodels::{PlayerModel, TrackModel};
 
 pub fn get_state(rustic: &Arc<Rustic>) -> Result<PlayerModel, Error> {
     let player = (&rustic.player).lock().unwrap();
-    let current = player.queue
-        .current()
-        .cloned()
-        .map(|track| TrackModel::new_with_joins(track, &rustic));
+    let current = match player.queue.current().cloned() {
+        Some(track) => Some(TrackModel::new_with_joins(track, &rustic)?),
+        None => None
+    };
 
     let state = PlayerModel {
         playing: (player.state == PlayerState::Play),

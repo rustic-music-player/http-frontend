@@ -21,7 +21,7 @@ pub fn search(query: &str, rustic: &Arc<Rustic>) -> Result<SearchResults, Error>
         .filter(|result| result.is_track())
         .map(Track::from)
         .map(|track| TrackModel::new_with_joins(track, rustic))
-        .collect();
+        .collect::<Result<Vec<TrackModel>, _>>()?;
 
     let albums: Vec<AlbumModel> = results
         .par_iter()
@@ -30,7 +30,7 @@ pub fn search(query: &str, rustic: &Arc<Rustic>) -> Result<SearchResults, Error>
         .filter(|result| result.is_album())
         .map(Album::from)
         .map(|album| AlbumModel::new_with_joins(album, rustic))
-        .collect();
+        .collect::<Result<Vec<AlbumModel>, _>>()?;
 
     let artists: Vec<ArtistModel> = results
         .par_iter()
@@ -39,7 +39,7 @@ pub fn search(query: &str, rustic: &Arc<Rustic>) -> Result<SearchResults, Error>
         .filter(|result| result.is_artist())
         .map(Artist::from)
         .map(|artist| ArtistModel::new_with_joins(artist, rustic))
-        .collect();
+        .collect::<Result<Vec<ArtistModel>, _>>()?;
 
     Ok(SearchResults {
         tracks,

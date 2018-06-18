@@ -2,6 +2,7 @@ use rustic_core::library::Artist;
 use rustic_core::Rustic;
 use std::sync::Arc;
 use viewmodels::{AlbumModel, TrackModel};
+use failure::Error;
 
 #[derive(Clone, Debug, Serialize)]
 pub struct ArtistModel {
@@ -14,9 +15,9 @@ pub struct ArtistModel {
 }
 
 impl ArtistModel {
-    pub fn new_with_joins(artist: Artist, app: &Arc<Rustic>) -> ArtistModel {
-        let albums = app.library.albums.read().unwrap();
-        let tracks = app.library.tracks.read().unwrap();
+    pub fn new_with_joins(artist: Artist, app: &Arc<Rustic>) -> Result<ArtistModel, Error> {
+        let albums = app.library.get_albums()?;
+        let tracks = app.library.get_tracks()?;
         let albums = albums
             .iter()
             .filter(|albums| albums.artist_id == artist.id)
@@ -30,14 +31,14 @@ impl ArtistModel {
             .map(|track| TrackModel::new(track, app))
             .collect();
         let image = artist.image(app);
-        ArtistModel {
+        Ok(ArtistModel {
             id: artist.id,
             name: artist.name,
             albums: Some(albums),
             tracks: Some(tracks),
             uri: artist.uri,
             image
-        }
+        })
     }
 
     pub fn new(artist: Artist, app: &Arc<Rustic>) -> ArtistModel {
