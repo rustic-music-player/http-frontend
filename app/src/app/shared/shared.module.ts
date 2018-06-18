@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTabsModule } from '@angular/material/tabs';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
@@ -29,6 +30,7 @@ import { ProviderPipe } from './provider.pipe';
         MatCardModule,
         MatIconModule,
         MatProgressSpinnerModule,
+        MatTabsModule,
         FlexLayoutModule,
         HttpClientModule,
         ReactiveFormsModule,

@@ -18,4 +18,5 @@ export interface Track {
 export interface Artist {
     id: number;
     name: string;
+    tracks?: Track[];
 }
