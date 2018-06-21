@@ -22,15 +22,13 @@ pub struct TrackModel {
 impl TrackModel {
     pub fn new_with_joins(track: Track, app: &Arc<Rustic>) -> Result<TrackModel, Error> {
         let artist = match track.artist_id {
-            Some(id) => app.library.get_artist(&id)?
-                .map(|artist| ArtistModel::new(artist, app)),
-            None => None
-        };
+            Some(id) => app.library.get_artist(&id)?,
+            None => track.artist.clone()
+        }.map(|artist| ArtistModel::new(artist, app));
         let album = match track.album_id {
-            Some(id) => app.library.get_album(&id)?
-                .map(|album| AlbumModel::new(album, app)),
-            None => None
-        };
+            Some(id) => app.library.get_album(&id)?,
+            None => track.album.clone()
+        }.map(|album| AlbumModel::new(album, app));
         let coverart = track.coverart(app);
         Ok(TrackModel {
             id: track.id,
@@ -55,8 +53,8 @@ impl TrackModel {
             provider: track.provider,
             coverart,
             duration: track.duration,
-            artist: None,
-            album: None
+            artist: track.artist.map(|artist| ArtistModel::new(artist, app)),
+            album: track.album.map(|album| AlbumModel::new(album, app))
         }
     }
 }

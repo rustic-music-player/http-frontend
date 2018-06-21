@@ -22,7 +22,7 @@ impl AlbumModel {
         AlbumModel {
             id: album.id,
             title: album.title,
-            artist: None,
+            artist: album.artist.map(|artist| ArtistModel::new(artist, app)),
             tracks: None,
             provider: album.provider,
             coverart,
@@ -43,6 +43,7 @@ impl AlbumModel {
             .iter()
             .cloned()
             .find(|artist| artist.id == album.artist_id)
+            .or_else(|| album.artist.clone())
             .map(|artist| ArtistModel::new(artist, app));
         let coverart = album.coverart(app);
         Ok(AlbumModel {
