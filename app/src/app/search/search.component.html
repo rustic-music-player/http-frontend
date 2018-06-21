@@ -7,17 +7,17 @@
     <ng-container *ngIf="results.artists.length">
         <h2>Artists</h2>
         <div fxLayout="row">
-            <rms-search-artist *ngFor="let artist of results.artists"
-                               [artist]="artist">
-            </rms-search-artist>
-    </div>
+            <rms-artist-card *ngFor="let artist of results.artists"
+                             [artist]="artist">
+            </rms-artist-card>
+        </div>
     </ng-container>
     <ng-container *ngIf="results.albums.length">
         <h2>Albums</h2>
         <div fxLayout="row">
-            <rms-search-album *ngFor="let album of results.albums"
-                              [album]="album">
-            </rms-search-album>
+            <rms-album-card *ngFor="let album of results.albums"
+                            [album]="album">
+            </rms-album-card>
         </div>
     </ng-container>
     <ng-container *ngIf="results.playlists.length">
@@ -28,7 +28,9 @@
     <ng-container *ngIf="results.tracks.length">
         <h2>Tracks</h2>
         <mat-list>
-            <rms-search-track *ngFor="let track of results.tracks" [track]="track"></rms-search-track>
+            <rms-track-list-item *ngFor="let track of results.tracks"
+                                 [track]="track">
+            </rms-track-list-item>
         </mat-list>
     </ng-container>
 </ng-container>

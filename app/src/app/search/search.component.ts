@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { SearchService } from './search.service';
 
 @Component({
@@ -6,9 +7,7 @@ import { SearchService } from './search.service';
     templateUrl: './search.component.html',
     styleUrls: ['./search.component.scss']
 })
-export class SearchComponent {
-
-    constructor(private search: SearchService) {}
+export class SearchComponent implements OnInit {
 
     get results$() {
         return this.search.results$;
@@ -16,5 +15,19 @@ export class SearchComponent {
 
     get pending$() {
         return this.search.pending$;
+    }
+
+    constructor(private search: SearchService,
+                private activeRoute: ActivatedRoute) {
+    }
+
+    ngOnInit() {
+        const query = this.activeRoute
+            .snapshot
+            .queryParamMap
+            .get('query');
+        if (query) {
+            this.search.query(query);
+        }
     }
 }

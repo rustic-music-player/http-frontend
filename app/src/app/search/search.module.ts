@@ -4,9 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SearchComponent } from './search.component';
 import { SharedModule } from '../shared/shared.module';
 import { SearchProviderComponent } from './search-provider/search-provider.component';
-import { SearchArtistComponent } from './search-artist/search-artist.component';
-import { SearchAlbumComponent } from './search-album/search-album.component';
-import { SearchTrackComponent } from './search-track/search-track.component';
+import { LibraryItemsModule } from '../shared/library-items/library-items.module';
 
 const routes: Routes = [
     {
@@ -19,14 +17,12 @@ const routes: Routes = [
     imports: [
         CommonModule,
         SharedModule,
-        RouterModule.forChild(routes)
+        RouterModule.forChild(routes),
+        LibraryItemsModule
     ],
     declarations: [
         SearchComponent,
-        SearchProviderComponent,
-        SearchArtistComponent,
-        SearchAlbumComponent,
-        SearchTrackComponent
+        SearchProviderComponent
     ]
 })
 export class SearchModule {

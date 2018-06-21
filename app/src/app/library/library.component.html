@@ -1,33 +1,21 @@
-<mat-tab-group>
-    <mat-tab label="Albums">
-        <ng-template matTabContent>
-            <div fxLayout="row wrap" fxLayoutAlign="center start" fxLayoutGap="4px" class="list">
-                <a *ngFor="let album of albums$ | async" [routerLink]="['/library/albums', album.id]">
-                    <img [src]="album.coverart">
-                </a>
-            </div>
-        </ng-template>
-    </mat-tab>
-    <mat-tab label="Artists">
-        <ng-template matTabContent>
-            <div fxLayout="row wrap" fxLayoutAlign="center start" fxLayoutGap="4px" class="list">
-                <a *ngFor="let artist of artists$ | async" [routerLink]="['/library/artists', artist.id]">
-                    <mat-card>
-                        <img [src]="artist.image" matCardImage>
-                    </mat-card>
-                </a>
-            </div>
-        </ng-template>
-    </mat-tab>
-    <mat-tab label="Songs">
-        <ng-template matTabContent>
-            <mat-nav-list>
-                <mat-list-item *ngFor="let track of tracks$ | async" (click)="queue(track)">
-                    <img [src]="track.coverart" matListAvatar>
-                    <h3 matLine>{{track.title}}</h3>
-                    <p matLine>{{track.artist?.name}}</p>
-                </mat-list-item>
-            </mat-nav-list>
-        </ng-template>
-    </mat-tab>
-</mat-tab-group>
+<nav mat-tab-nav-bar>
+    <a mat-tab-link
+       routerLink="albums"
+       routerLinkActive #albums="routerLinkActive"
+       [active]="albums.isActive">
+        Albums
+    </a>
+    <a mat-tab-link
+       routerLink="artists"
+       routerLinkActive #artists="routerLinkActive"
+       [active]="artists.isActive">
+        Artists
+    </a>
+    <a mat-tab-link
+       routerLink="tracks"
+       routerLinkActive #tracks="routerLinkActive"
+       [active]="tracks.isActive">
+        Tracks
+    </a>
+</nav>
+<router-outlet></router-outlet>

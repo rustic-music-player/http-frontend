@@ -1,0 +1,10 @@
+@import '~@angular/material/theming';
+@import "../../theme";
+
+:host a[mat-list-item] {
+    &.active,
+    &.active:focus {
+        color: mat-color($rms-accent);
+        background: rgba(mat-color($rms-accent), 0.1);
+    }
+}

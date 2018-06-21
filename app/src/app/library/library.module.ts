@@ -6,15 +6,33 @@ import { RouterModule, Routes } from '@angular/router';
 import { AlbumComponent } from './album/album.component';
 import { AlbumResolver } from './album/album.resolver';
 import { LibraryService } from './library.service';
+import { LibraryItemsModule } from '../shared/library-items/library-items.module';
+import { AlbumsComponent } from './albums/albums.component';
+import { ArtistsComponent } from './artists/artists.component';
+import { TracksComponent } from './tracks/tracks.component';
 
 const routes: Routes = [
     {
         path: 'library',
-        component: LibraryComponent
+        component: LibraryComponent,
+        children: [
+            {
+                path: 'albums',
+                component: AlbumsComponent
+            },
+            {
+                path: 'artists',
+                component: ArtistsComponent
+            },
+            {
+                path: 'tracks',
+                component: TracksComponent
+            }
+        ]
     },
     {
         path: '',
-        redirectTo: '/library',
+        redirectTo: '/library/albums',
         pathMatch: 'full'
     },
     {
@@ -30,11 +48,15 @@ const routes: Routes = [
     imports: [
         CommonModule,
         SharedModule,
-        RouterModule.forChild(routes)
+        RouterModule.forChild(routes),
+        LibraryItemsModule
     ],
     declarations: [
         LibraryComponent,
-        AlbumComponent
+        AlbumComponent,
+        AlbumsComponent,
+        ArtistsComponent,
+        TracksComponent
     ],
     exports: [
         LibraryComponent

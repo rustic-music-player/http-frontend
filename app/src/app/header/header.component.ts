@@ -22,9 +22,14 @@ export class HeaderComponent {
                 private router: Router) {
         this.searchControl
             .valueChanges
-            .pipe(tap(() => this.router.navigateByUrl('/search')))
+            .pipe(tap(query => this.router.navigateByUrl(`/search?query=${query}`)))
             .pipe(debounceTime(500))
-            .subscribe(value => this.search.query(value))
+            .subscribe(value => this.search.query(value));
+        this.search
+            .query$
+            .subscribe(query => this.searchControl.setValue(query, {
+                emitEvent: false
+            }));
     }
 
     onToggleSidenav() {

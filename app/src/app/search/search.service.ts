@@ -22,6 +22,7 @@ const EMPTY_RESULTS: SearchResults = {
 })
 export class SearchService {
 
+    private _query$ = new BehaviorSubject<string>('');
     private _pending$ = new BehaviorSubject<boolean>(false);
     private _results$ = new BehaviorSubject<SearchResults>(EMPTY_RESULTS);
     private _providers$ = new BehaviorSubject([]);
@@ -37,7 +38,12 @@ export class SearchService {
         return this._pending$.asObservable();
     }
 
+    get query$(): Observable<string> {
+        return this._query$.asObservable();
+    }
+
     query(query: string) {
+        this._query$.next(query);
         this._pending$.next(true);
         this._results$.next(EMPTY_RESULTS);
         this.http
