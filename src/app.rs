@@ -5,6 +5,7 @@ use actix_web::HttpRequest;
 use rustic_core::Rustic;
 use std::sync::Arc;
 use controller;
+use socket::build_socket_app;
 
 fn build_api_app(app: Arc<Rustic>) -> App<Arc<Rustic>> {
     App::with_state(app)
@@ -42,7 +43,8 @@ fn build_static_app() -> App<()> {
 pub fn start(config: &HttpConfig, app: Arc<Rustic>) -> Result<()> {
     server::new(move || {
         vec![
-            build_api_app(app.clone()).boxed(),
+            build_socket_app(Arc::clone(&app)).boxed(),
+            build_api_app(Arc::clone(&app)).boxed(),
             build_static_app().boxed()
         ]
     })

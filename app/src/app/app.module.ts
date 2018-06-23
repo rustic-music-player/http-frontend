@@ -14,6 +14,7 @@ import { QueueService } from './queue.service';
 import { PlaylistsModule } from './playlists/playlists.module';
 import { SearchModule } from './search/search.module';
 import { MatIconRegistry } from '@angular/material/icon';
+import { SocketService } from './socket.service';
 
 @NgModule({
     declarations: [
@@ -32,7 +33,8 @@ import { MatIconRegistry } from '@angular/material/icon';
         SearchModule
     ],
     providers: [
-        QueueService
+        QueueService,
+        SocketService
     ],
     bootstrap: [AppComponent]
 })

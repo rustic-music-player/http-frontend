@@ -1,10 +1,10 @@
 <mat-toolbar>
     <mat-toolbar-row fxLayout="row"
                      fxLayoutAlign="start center">
-        <img class="coverart" [src]="current?.coverart" *ngIf="current?.coverart"/>
+        <img class="coverart" [src]="coverart" *ngIf="(current$ | async)?.coverart as coverart"/>
         <div class="current-track" fxLayout="column" fxLayoutAlign="center start" fxFlex.gt-sm>
-            <span class="mat-body-2">{{current?.title}}</span>
-            <span class="mat-body-1">{{current?.artist?.name}}</span>
+            <span class="mat-body-2">{{(current$ | async)?.title}}</span>
+            <span class="mat-body-1">{{(current$ | async)?.artist?.name}}</span>
         </div>
         <div>
             <button mat-icon-button (click)="prev($event)" fxHide.xs>

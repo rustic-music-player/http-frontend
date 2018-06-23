@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { PlayerService, PlayerState } from './player.service';
-import { interval, Observable } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Track } from '../library/album.model';
 import { ObservableMedia } from '@angular/flex-layout';
 import { FlexibleConnectedPositionStrategy, Overlay, OverlayPositionBuilder, OverlayRef } from '@angular/cdk/overlay';
@@ -25,21 +25,21 @@ export class PlayerComponent implements OnInit {
     showQueue = false;
 
     playing = false;
-    current: Track;
+    current$: Observable<Track | null>;
 
     constructor(private player: PlayerService,
                 private media: ObservableMedia,
                 private overlay: Overlay,
                 private positionBuilder: OverlayPositionBuilder) {
+        this.current$ = this.player.observeCurrentTrack();
+        this.player
+            .observePlaying()
+            .subscribe(playing => {
+                this.playing = playing
+            });
     }
 
     ngOnInit() {
-        interval(1000)
-            .pipe(switchMap(this.player.getState.bind(this.player)))
-            .subscribe((state: PlayerState) => {
-                this.playing = state.playing;
-                this.current = state.current;
-            });
         this.media
             .subscribe(change => {
                 if (change.mqAlias === 'xs') {
@@ -57,9 +57,7 @@ export class PlayerComponent implements OnInit {
         }else {
             observable = this.player.play();
         }
-        observable.subscribe(() => {
-            this.playing = !this.playing;
-        });
+        observable.subscribe(() => {});
     }
 
     next($event: MouseEvent) {

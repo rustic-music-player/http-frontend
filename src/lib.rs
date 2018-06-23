@@ -7,11 +7,14 @@ extern crate serde_derive;
 extern crate mime;
 #[macro_use]
 extern crate log;
+#[macro_use]
+extern crate actix;
 extern crate actix_web;
 extern crate failure;
 #[macro_use]
 extern crate failure_derive;
 extern crate rayon;
+extern crate uuid;
 
 use rustic_core::Rustic;
 
@@ -23,6 +26,7 @@ mod app;
 mod handler;
 mod viewmodels;
 mod controller;
+mod socket;
 
 #[derive(Deserialize, Clone)]
 pub struct HttpConfig {
