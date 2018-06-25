@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { QueueService } from '../../queue.service';
 import { Album } from '../../contracts/album.model';
 import { Track } from '../../contracts/track.model';
+import { RmsState, selectCurrentAlbum } from '../../store/reducers';
+import { select, Store } from '@ngrx/store';
 
 @Component({
     selector: 'rms-album',
@@ -15,8 +15,8 @@ export class AlbumComponent {
 
     album$: Observable<Album>;
 
-    constructor(private route: ActivatedRoute, private queue: QueueService) {
-        this.album$ = this.route.data.pipe(map(({ album }) => album));
+    constructor(private store: Store<RmsState>, private queue: QueueService) {
+        this.album$ = this.store.pipe(select(selectCurrentAlbum));
     }
 
     queueTrack(track: Track) {

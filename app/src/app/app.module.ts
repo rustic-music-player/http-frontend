@@ -18,6 +18,11 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { RouterModule } from '@angular/router';
 import { PlayerEffects } from './store/effects/player.effects';
+import { AlbumEffects } from './store/effects/album.effects';
+import { ArtistEffects } from './store/effects/artist.effects';
+import { TrackEffects } from './store/effects/track.effects';
+import { RouterStateSerializer, StoreRouterConnectingModule } from '@ngrx/router-store';
+import { CustomRouterStateSerializer } from './store/reducers/router.reducer';
 
 @NgModule({
     declarations: [
@@ -31,8 +36,14 @@ import { PlayerEffects } from './store/effects/player.effects';
         SharedModule,
         StoreModule.forRoot(reducers),
         StoreDevtoolsModule.instrument(),
+        StoreRouterConnectingModule.forRoot({
+            stateKey: 'router'
+        }),
         EffectsModule.forRoot([
-            PlayerEffects
+            PlayerEffects,
+            AlbumEffects,
+            ArtistEffects,
+            TrackEffects
         ]),
         PlayerModule,
         LibraryModule,
@@ -41,7 +52,11 @@ import { PlayerEffects } from './store/effects/player.effects';
     ],
     providers: [
         QueueService,
-        SocketService
+        SocketService,
+        {
+            provide: RouterStateSerializer,
+            useClass: CustomRouterStateSerializer
+        }
     ],
     bootstrap: [AppComponent]
 })
