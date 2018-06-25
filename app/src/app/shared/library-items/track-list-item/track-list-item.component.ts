@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Track } from '../../../library/album.model';
+import { Track } from '../../../contracts/track.model';
 
 @Component({
     selector: 'rms-track-list-item',

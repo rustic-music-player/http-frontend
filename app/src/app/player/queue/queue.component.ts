@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { QueueService } from '../../queue.service';
-import { Track } from '../../library/album.model';
 import { Observable, timer } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { Track } from '../../contracts/track.model';
 
 @Component({
     selector: 'rms-queue',

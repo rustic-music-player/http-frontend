@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { LibraryService } from '../library.service';
-import { Artist } from '../album.model';
 import { Observable } from 'rxjs';
+import { Artist } from '../../contracts/artist.model';
 
 @Component({
     selector: 'rms-artists',

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { PlaylistsService } from '../playlists.service';
 import { Observable } from 'rxjs';
-import { Playlist } from '../playlist.model';
+import { Playlist } from '../../contracts/playlist.model';
 
 @Component({
     selector: 'rms-playlists',

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Artist } from '../../../library/album.model';
+import { Artist } from '../../../contracts/artist.model';
 
 @Component({
   selector: 'rms-artist-card',

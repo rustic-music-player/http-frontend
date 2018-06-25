@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Playlist } from './playlist.model';
+import { Playlist } from '../contracts/playlist.model';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 

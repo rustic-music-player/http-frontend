@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Track } from './library/album.model';
+import { Track } from './contracts/track.model';
 
 @Injectable()
 export class QueueService {
@@ -16,5 +16,4 @@ export class QueueService {
     get(): Observable<Track[]> {
         return this.http.get<Track[]>('/api/queue');
     }
-
 }

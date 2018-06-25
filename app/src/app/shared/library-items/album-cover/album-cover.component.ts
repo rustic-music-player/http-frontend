@@ -1,5 +1,5 @@
 import { Component, Input, HostBinding } from '@angular/core';
-import { Album } from '../../../library/album.model';
+import { Album } from '../../../contracts/album.model';
 
 @Component({
   selector: 'rms-album-cover',

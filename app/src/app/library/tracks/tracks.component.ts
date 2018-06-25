@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { LibraryService } from '../library.service';
-import { Track } from '../album.model';
 import { Observable } from 'rxjs';
+import { Track } from '../../contracts/track.model';
 
 @Component({
     selector: 'rms-tracks',

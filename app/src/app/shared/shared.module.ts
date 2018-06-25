@@ -15,6 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { DurationPipe } from './duration.pipe';
 import { ProviderPipe } from './provider.pipe';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     imports: [
@@ -35,7 +36,8 @@ import { ProviderPipe } from './provider.pipe';
         HttpClientModule,
         ReactiveFormsModule,
         DurationPipe,
-        ProviderPipe
+        ProviderPipe,
+        RouterModule,
     ],
     declarations: [
         DurationPipe,

@@ -1,10 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { PlayerService, PlayerState } from './player.service';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Track } from '../library/album.model';
 import { ObservableMedia } from '@angular/flex-layout';
 import { FlexibleConnectedPositionStrategy, Overlay, OverlayPositionBuilder, OverlayRef } from '@angular/cdk/overlay';
+import { Track } from '../contracts/track.model';
+import { RmsState, selectCurrentTrack, selectPlayingState } from '../store/reducers';
+import { select, Store } from '@ngrx/store';
+import { PlayerNext, PlayerPause, PlayerPlay, PlayerPrev } from '../store/actions/player.actions';
 
 @Component({
     selector: 'rms-player',
@@ -27,13 +28,13 @@ export class PlayerComponent implements OnInit {
     playing = false;
     current$: Observable<Track | null>;
 
-    constructor(private player: PlayerService,
-                private media: ObservableMedia,
+    constructor(private media: ObservableMedia,
                 private overlay: Overlay,
-                private positionBuilder: OverlayPositionBuilder) {
-        this.current$ = this.player.observeCurrentTrack();
-        this.player
-            .observePlaying()
+                private positionBuilder: OverlayPositionBuilder,
+                private store: Store<RmsState>) {
+        this.current$ = this.store.pipe(select(selectCurrentTrack));
+        this.store
+            .pipe(select(selectPlayingState))
             .subscribe(playing => {
                 this.playing = playing
             });
@@ -51,31 +52,23 @@ export class PlayerComponent implements OnInit {
     toggle($event: MouseEvent) {
         $event.preventDefault();
         $event.stopPropagation();
-        let observable: Observable<void>;
         if (this.playing) {
-            observable = this.player.pause();
+            this.store.dispatch(new PlayerPause());
         }else {
-            observable = this.player.play();
+            this.store.dispatch(new PlayerPlay());
         }
-        observable.subscribe(() => {});
     }
 
     next($event: MouseEvent) {
         $event.preventDefault();
         $event.stopPropagation();
-        this.player
-            .next()
-            .subscribe(() => {
-            });
+        this.store.dispatch(new PlayerNext());
     }
 
     prev($event: MouseEvent) {
         $event.preventDefault();
         $event.stopPropagation();
-        this.player
-            .prev()
-            .subscribe(() => {
-            });
+        this.store.dispatch(new PlayerPrev());
     }
 
     toggleQueue() {

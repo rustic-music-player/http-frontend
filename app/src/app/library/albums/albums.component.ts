@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { LibraryService } from '../library.service';
-import { Album } from '../album.model';
 import { Observable } from 'rxjs';
+import { Album } from '../../contracts/album.model';
 
 @Component({
     selector: 'rms-library-albums',

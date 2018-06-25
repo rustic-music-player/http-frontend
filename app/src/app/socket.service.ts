@@ -13,12 +13,6 @@ export class SocketService {
 
     constructor() {
         this._ws$ = webSocket('ws://localhost:4200/api/socket');
-
-        this._ws$.subscribe(msg => console.log(msg));
-
-        this._ws$.next({
-            msg: 'test'
-        });
     }
 
     get ws$() {

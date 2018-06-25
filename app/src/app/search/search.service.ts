@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Album, Artist, Track } from '../library/album.model';
+import { Track } from '../contracts/track.model';
+import { Album } from '../contracts/album.model';
+import { Artist } from '../contracts/artist.model';
+import { Playlist } from '../contracts/playlist.model';
 
 export interface SearchResults {
     tracks: Track[],
     albums: Album[],
     artists: Artist[],
-    playlists: any[]
+    playlists: Playlist[]
 }
 
 const EMPTY_RESULTS: SearchResults = {

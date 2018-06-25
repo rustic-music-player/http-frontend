@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { Album, Track } from '../album.model';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { QueueService } from '../../queue.service';
+import { Album } from '../../contracts/album.model';
+import { Track } from '../../contracts/track.model';
 
 @Component({
     selector: 'rms-album',
