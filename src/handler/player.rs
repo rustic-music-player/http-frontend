@@ -5,14 +5,13 @@ use std::sync::Arc;
 use viewmodels::{PlayerModel, TrackModel};
 
 pub fn get_state(rustic: &Arc<Rustic>) -> Result<PlayerModel, Error> {
-    let player = (&rustic.player).lock().unwrap();
-    let current = match player.queue.current().cloned() {
+    let current = match rustic.player.current() {
         Some(track) => Some(TrackModel::new_with_joins(track, &rustic)?),
         None => None
     };
 
     let state = PlayerModel {
-        playing: (player.state == PlayerState::Play),
+        playing: (rustic.player.state() == PlayerState::Play),
         current
     };
 
@@ -20,29 +19,29 @@ pub fn get_state(rustic: &Arc<Rustic>) -> Result<PlayerModel, Error> {
 }
 
 pub fn control_next(rustic: &Arc<Rustic>) -> Result<(), Error> {
-    let mut player = (&rustic.player).lock().unwrap();
+    let mut player = Arc::clone(&rustic.player);
     player.next()?;
 
     Ok(())
 }
 
 pub fn control_prev(rustic: &Arc<Rustic>) -> Result<(), Error> {
-    let mut player = (&rustic.player).lock().unwrap();
+    let mut player = Arc::clone(&rustic.player);
     player.prev()?;
 
     Ok(())
 }
 
 pub fn control_pause(rustic: &Arc<Rustic>) -> Result<(), Error> {
-    let mut player = (&rustic.player).lock().unwrap();
-    player.pause()?;
+    let mut player = Arc::clone(&rustic.player);
+    player.set_state(PlayerState::Pause)?;
 
     Ok(())
 }
 
 pub fn control_play(rustic: &Arc<Rustic>) -> Result<(), Error> {
-    let mut player = (&rustic.player).lock().unwrap();
-    player.play()?;
+    let mut player = Arc::clone(&rustic.player);
+    player.set_state(PlayerState::Play)?;
 
     Ok(())
 }

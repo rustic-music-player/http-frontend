@@ -1,6 +1,6 @@
 use actix::{Addr, Syn, Arbiter};
 use actix_web::{App, HttpRequest, HttpResponse, middleware, ws, Error, http::Method};
-use rustic_core::{Rustic, bus, player};
+use rustic_core::{Rustic, player::{PlayerEvent, PlayerState}};
 use std::sync::Arc;
 use std::thread;
 use viewmodels::TrackModel;
@@ -21,25 +21,23 @@ pub fn build_socket_app(rustic: Arc<Rustic>) -> App<SocketState> {
         addr: addr.clone(),
     };
     thread::spawn(move|| {
-        let bus = Arc::clone(&rustic.bus);
-        let subscriber = move |msg| {
-            match msg {
-                bus::Message::PlayerState(state) => {
+        let player = Arc::clone(&rustic.player);
+
+        loop {
+            let event = player.observe().recv();
+
+            match event {
+                Some(PlayerEvent::StateChanged(state)) => {
                     debug!("received new playing state");
-                    addr.do_send(messages::Message::PlayerStateChanged(state == player::PlayerState::Play));
+                    addr.do_send(messages::Message::PlayerStateChanged(state == PlayerState::Play));
                 },
-                bus::Message::CurrentlyPlaying(track) => {
+                Some(PlayerEvent::TrackChanged(track)) => {
                     debug!("received currently playing track");
-                    let model = track.and_then(|track| TrackModel::new_with_joins(track, &rustic).ok());
+                    let model = TrackModel::new_with_joins(track, &rustic).ok();
                     addr.do_send(messages::Message::CurrentlyPlayingChanged(model));
                 },
-                _ => {}
+                msg => debug!("unexpected msg {:?}", msg)
             }
-        };
-
-        {
-            let mut bus = bus.lock().unwrap();
-            bus.subscribe(Box::new(subscriber));
         }
     });
     App::with_state(state)
