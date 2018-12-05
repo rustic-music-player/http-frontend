@@ -29,15 +29,10 @@ fn build_api_app(app: Arc<Rustic>) -> App<Arc<Rustic>> {
         .resource("/search", |r| r.method(Method::GET).with(controller::search::search))
 }
 
-fn index(_req: HttpRequest) -> Result<fs::NamedFile> {
-    Ok(fs::NamedFile::open(format!("{}/index.html", env!("APP_DIST")))?)
-}
-
 fn build_static_app() -> App<()> {
     App::new()
         .middleware(middleware::Logger::default())
         .handler("/cache", fs::StaticFiles::new(".cache"))
-        .handler("/", fs::StaticFiles::new(env!("APP_DIST")).default_handler(index))
 }
 
 pub fn start(config: &HttpConfig, app: Arc<Rustic>) -> Result<()> {
