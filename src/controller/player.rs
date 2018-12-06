@@ -1,8 +1,8 @@
-use actix_web::{HttpRequest, Result, Json};
+use actix_web::{HttpRequest, Json, Result};
+use handler::player as player_handler;
 use rustic_core::Rustic;
 use std::sync::Arc;
 use viewmodels::PlayerModel;
-use handler::player as player_handler;
 
 pub fn player_state(req: HttpRequest<Arc<Rustic>>) -> Result<Json<PlayerModel>> {
     let rustic = req.state();

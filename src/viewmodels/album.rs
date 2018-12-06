@@ -1,9 +1,9 @@
+use failure::Error;
 use rustic_core::library::Album;
 use rustic_core::provider::Provider;
 use rustic_core::Rustic;
 use std::sync::Arc;
 use viewmodels::{ArtistModel, TrackModel};
-use failure::Error;
 
 #[derive(Clone, Debug, Serialize)]
 pub struct AlbumModel {
@@ -13,7 +13,7 @@ pub struct AlbumModel {
     pub tracks: Option<Vec<TrackModel>>,
     pub provider: Provider,
     pub coverart: Option<String>,
-    pub uri: String
+    pub uri: String,
 }
 
 impl AlbumModel {
@@ -26,7 +26,7 @@ impl AlbumModel {
             tracks: None,
             provider: album.provider,
             coverart,
-            uri: album.uri
+            uri: album.uri,
         }
     }
 
@@ -53,7 +53,7 @@ impl AlbumModel {
             tracks: Some(tracks),
             provider: album.provider,
             coverart,
-            uri: album.uri
+            uri: album.uri,
         })
     }
 }

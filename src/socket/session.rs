@@ -1,12 +1,12 @@
-use actix::{Addr, fut, Syn};
 use actix::prelude::*;
+use actix::{fut, Addr, Syn};
 use actix_web::ws;
-use socket::{messages, SocketState};
 use serde_json;
+use socket::{messages, SocketState};
 
 #[derive(Default, Debug)]
 pub struct SocketSession {
-    pub id: String
+    pub id: String,
 }
 
 impl Actor for SocketSession {
@@ -25,8 +25,7 @@ impl Actor for SocketSession {
             .addr
             .send(messages::Connect {
                 addr: addr.recipient(),
-            })
-            .into_actor(self)
+            }).into_actor(self)
             .then(|res, act, ctx| {
                 match res {
                     Ok(res) => act.id = res,
@@ -34,13 +33,14 @@ impl Actor for SocketSession {
                     _ => ctx.stop(),
                 }
                 fut::ok(())
-            })
-            .wait(ctx);
+            }).wait(ctx);
     }
 
     fn stopping(&mut self, ctx: &mut Self::Context) -> Running {
         // notify chat server
-        ctx.state().addr.do_send(messages::Disconnect { id: self.id.clone() });
+        ctx.state().addr.do_send(messages::Disconnect {
+            id: self.id.clone(),
+        });
         Running::Stop
     }
 }
@@ -59,7 +59,7 @@ impl StreamHandler<ws::Message, ws::ProtocolError> for SocketSession {
         trace!("WEBSOCKET MESSAGE: {:?}", msg);
         match msg {
             ws::Message::Ping(msg) => ctx.pong(&msg),
-            ws::Message::Pong(_) => {},
+            ws::Message::Pong(_) => {}
             ws::Message::Text(text) => {}
             ws::Message::Binary(_) => warn!("Unexpected binary"),
             ws::Message::Close(_) => {

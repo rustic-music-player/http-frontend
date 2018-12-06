@@ -5,12 +5,10 @@ use viewmodels::*;
 
 pub fn fetch_album(album_id: usize, rustic: &Arc<Rustic>) -> Result<Option<AlbumModel>, Error> {
     let library = &rustic.library;
-    let album: Option<AlbumModel> = library
-        .get_album(&album_id)
-        .and_then(|album| match album {
-            Some(album) => Ok(Some(AlbumModel::new_with_joins(album, &rustic)?)),
-            None => Ok(None)
-        })?;
+    let album: Option<AlbumModel> = library.get_album(&album_id).and_then(|album| match album {
+        Some(album) => Ok(Some(AlbumModel::new_with_joins(album, &rustic)?)),
+        None => Ok(None),
+    })?;
 
     Ok(album)
 }

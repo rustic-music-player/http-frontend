@@ -1,9 +1,9 @@
 use actix::prelude::*;
-use std::collections::HashMap;
-use socket::messages;
 use failure::Error;
-use uuid::Uuid;
 use rustic_core::player::PlayerState;
+use socket::messages;
+use std::collections::HashMap;
+use uuid::Uuid;
 
 #[derive(Default)]
 pub struct SocketServer {

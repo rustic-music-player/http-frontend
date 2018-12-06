@@ -1,9 +1,9 @@
+use failure::Error;
 use rustic_core::library::Playlist;
 use rustic_core::provider::Provider;
 use rustic_core::Rustic;
-use viewmodels::TrackModel;
 use std::sync::Arc;
-use failure::Error;
+use viewmodels::TrackModel;
 
 #[derive(Clone, Debug, Serialize)]
 pub struct PlaylistModel {
@@ -11,12 +11,13 @@ pub struct PlaylistModel {
     pub title: String,
     pub tracks: Vec<TrackModel>,
     pub provider: Provider,
-    pub uri: String
+    pub uri: String,
 }
 
 impl PlaylistModel {
     pub fn from(playlist: Playlist, app: &Arc<Rustic>) -> Result<PlaylistModel, Error> {
-        let tracks = playlist.tracks
+        let tracks = playlist
+            .tracks
             .into_iter()
             .map(|track| TrackModel::new_with_joins(track, app))
             .collect::<Result<Vec<TrackModel>, _>>()?;
@@ -26,7 +27,7 @@ impl PlaylistModel {
             title: playlist.title,
             tracks,
             provider: playlist.provider,
-            uri: playlist.uri
+            uri: playlist.uri,
         })
     }
 }

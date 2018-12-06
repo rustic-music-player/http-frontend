@@ -1,18 +1,18 @@
 use failure::Error;
-use rustic_core::Rustic;
 use rustic_core::player::PlayerState;
+use rustic_core::Rustic;
 use std::sync::Arc;
 use viewmodels::{PlayerModel, TrackModel};
 
 pub fn get_state(rustic: &Arc<Rustic>) -> Result<PlayerModel, Error> {
     let current = match rustic.player.current() {
         Some(track) => Some(TrackModel::new_with_joins(track, &rustic)?),
-        None => None
+        None => None,
     };
 
     let state = PlayerModel {
         playing: (rustic.player.state() == PlayerState::Play),
-        current
+        current,
     };
 
     Ok(state)

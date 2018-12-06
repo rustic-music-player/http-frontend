@@ -1,9 +1,9 @@
 use failure::Error;
-use rustic_core::{Rustic, Track, Playlist, Album, Artist};
+use rayon::prelude::*;
 use rustic_core::provider::ProviderItem;
+use rustic_core::{Album, Artist, Playlist, Rustic, Track};
 use std::sync::Arc;
 use viewmodels::*;
-use rayon::prelude::*;
 
 pub fn search(query: &str, rustic: &Arc<Rustic>) -> Result<SearchResults, Error> {
     let providers = &rustic.providers;
@@ -45,6 +45,6 @@ pub fn search(query: &str, rustic: &Arc<Rustic>) -> Result<SearchResults, Error>
         tracks,
         albums,
         artists,
-        playlists: vec![]
+        playlists: vec![],
     })
 }

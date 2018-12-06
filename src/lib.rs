@@ -23,23 +23,23 @@ use std::sync::Arc;
 use std::thread;
 
 mod app;
-mod handler;
-mod viewmodels;
 mod controller;
+mod handler;
 mod socket;
+mod viewmodels;
 
 #[derive(Deserialize, Clone)]
 pub struct HttpConfig {
     pub ip: String,
-    pub port: i32
+    pub port: i32,
 }
 
 pub fn start(config: Option<HttpConfig>, app: Arc<Rustic>) -> thread::JoinHandle<()> {
     let config = config.unwrap_or(HttpConfig {
         ip: "0.0.0.0".to_owned(),
-        port: 8080
+        port: 8080,
     });
-    thread::spawn(move|| {
+    thread::spawn(move || {
         app::start(&config, app).unwrap();
     })
 }

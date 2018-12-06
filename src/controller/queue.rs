@@ -1,17 +1,17 @@
-use actix_web::{State, Path, Json, error, Result, HttpRequest};
-use std::sync::Arc;
-use rustic_core::Rustic;
-use viewmodels::TrackModel;
+use actix_web::{error, HttpRequest, Json, Path, Result, State};
 use handler::queue as queue_handler;
+use rustic_core::Rustic;
+use std::sync::Arc;
+use viewmodels::TrackModel;
 
 #[derive(Deserialize)]
 pub struct QueueTrackQuery {
-    track_id: usize
+    track_id: usize,
 }
 
 #[derive(Deserialize)]
 pub struct QueuePlaylistQuery {
-    playlist_id: usize
+    playlist_id: usize,
 }
 
 pub fn fetch(req: HttpRequest<Arc<Rustic>>) -> Result<Json<Vec<TrackModel>>> {
@@ -26,7 +26,7 @@ pub fn queue_track(req: (State<Arc<Rustic>>, Path<QueueTrackQuery>)) -> Result<J
     let result = queue_handler::queue_track(params.track_id, &rustic)?;
     match result {
         Some(_) => Ok(Json(())),
-        None => Err(error::ErrorNotFound("Not Found"))
+        None => Err(error::ErrorNotFound("Not Found")),
     }
 }
 
@@ -35,7 +35,7 @@ pub fn queue_playlist(req: (State<Arc<Rustic>>, Path<QueuePlaylistQuery>)) -> Re
     let result = queue_handler::queue_playlist(params.playlist_id, &rustic)?;
     match result {
         Some(_) => Ok(Json(())),
-        None => Err(error::ErrorNotFound("Not Found"))
+        None => Err(error::ErrorNotFound("Not Found")),
     }
 }
 

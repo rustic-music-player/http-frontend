@@ -1,5 +1,5 @@
 use failure::Error;
-use rustic_core::{Rustic, Track, Playlist};
+use rustic_core::{Playlist, Rustic, Track};
 use std::sync::Arc;
 use viewmodels::TrackModel;
 
@@ -22,8 +22,8 @@ pub fn queue_track(track_id: usize, rustic: &Arc<Rustic>) -> Result<Option<()>, 
             player.queue_single(&track);
 
             Ok(Some(()))
-        },
-        None => Ok(None)
+        }
+        None => Ok(None),
     }
 }
 
@@ -37,8 +37,8 @@ pub fn queue_playlist(playlist_id: usize, rustic: &Arc<Rustic>) -> Result<Option
             player.queue_multiple(&playlist.tracks);
 
             Ok(Some(()))
-        },
-        None => Ok(None)
+        }
+        None => Ok(None),
     }
 }
 

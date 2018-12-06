@@ -1,12 +1,12 @@
-use actix_web::{State, Path, Json, error, Result, HttpRequest};
-use std::sync::Arc;
-use rustic_core::Rustic;
+use actix_web::{error, HttpRequest, Json, Path, Result, State};
 use handler::library as library_handler;
+use rustic_core::Rustic;
+use std::sync::Arc;
 use viewmodels::*;
 
 #[derive(Deserialize)]
 pub struct GetAlbumQuery {
-    album_id: usize
+    album_id: usize,
 }
 
 pub fn get_album(req: (State<Arc<Rustic>>, Path<GetAlbumQuery>)) -> Result<Json<AlbumModel>> {
@@ -14,7 +14,7 @@ pub fn get_album(req: (State<Arc<Rustic>>, Path<GetAlbumQuery>)) -> Result<Json<
     let album = library_handler::fetch_album(params.album_id, &rustic)?;
     match album {
         Some(album) => Ok(Json(album)),
-        None => Err(error::ErrorNotFound("Not Found"))
+        None => Err(error::ErrorNotFound("Not Found")),
     }
 }
 
