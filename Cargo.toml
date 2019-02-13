@@ -22,4 +22,4 @@ rayon = "1.0"
 uuid = { version = "0.6", features = ["v4"] }
 
 [dependencies.rustic-core]
-git = "https://github.com/rustic-music-player/core"
+path = "../../core"
