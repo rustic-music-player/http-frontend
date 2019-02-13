@@ -1,4 +1,4 @@
-use actix::{Addr, Arbiter, Syn};
+use actix::{Addr, Arbiter};
 use actix_web::{http::Method, middleware, ws, App, Error, HttpRequest, HttpResponse};
 use rustic_core::{
     player::{PlayerEvent, PlayerState},
@@ -7,6 +7,7 @@ use rustic_core::{
 use std::sync::Arc;
 use std::thread;
 use viewmodels::TrackModel;
+use failure;
 
 mod messages;
 mod server;
@@ -14,7 +15,7 @@ mod session;
 
 pub struct SocketState {
     pub rustic: Arc<Rustic>,
-    pub addr: Addr<Syn, server::SocketServer>,
+    pub addr: Addr<server::SocketServer>,
 }
 
 pub fn build_socket_app(rustic: Arc<Rustic>) -> App<SocketState> {
@@ -41,6 +42,14 @@ pub fn build_socket_app(rustic: Arc<Rustic>) -> App<SocketState> {
                     let model = TrackModel::new_with_joins(track, &rustic).ok();
                     addr.do_send(messages::Message::CurrentlyPlayingChanged(model));
                 }
+                Some(PlayerEvent::QueueUpdated(queue)) => {
+                    debug!("received new queue");
+                    let models = queue.into_iter()
+                        .map(|track| TrackModel::new_with_joins(track, &rustic))
+                        .collect::<Result<Vec<TrackModel>, failure::Error>>()
+                        .unwrap();
+                    addr.do_send(messages::Message::QueueUpdated(models));
+                }
                 msg => debug!("unexpected msg {:?}", msg),
             }
         }
@@ -48,10 +57,10 @@ pub fn build_socket_app(rustic: Arc<Rustic>) -> App<SocketState> {
     App::with_state(state)
         .middleware(middleware::Logger::default())
         .prefix("/api/socket")
-        .resource("/", |r| r.method(Method::GET).f(open))
+        .resource("", |r| r.method(Method::GET).f(open))
 }
 
-pub fn open(req: HttpRequest<SocketState>) -> Result<HttpResponse, Error> {
+pub fn open(req: &HttpRequest<SocketState>) -> Result<HttpResponse, Error> {
     debug!("connection");
     ws::start(req, session::SocketSession::default())
 }

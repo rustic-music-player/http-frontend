@@ -3,7 +3,6 @@ extern crate serde;
 extern crate serde_json;
 #[macro_use]
 extern crate serde_derive;
-#[macro_use]
 extern crate mime;
 #[macro_use]
 extern crate log;
@@ -11,8 +10,6 @@ extern crate log;
 extern crate actix;
 extern crate actix_web;
 extern crate failure;
-#[macro_use]
-extern crate failure_derive;
 extern crate rayon;
 extern crate uuid;
 

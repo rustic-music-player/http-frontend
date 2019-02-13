@@ -1,5 +1,4 @@
 use actix_web::http::Method;
-use actix_web::HttpRequest;
 use actix_web::{fs, middleware, server, App, Result};
 use controller;
 use rustic_core::Rustic;
@@ -47,10 +46,10 @@ fn build_api_app(app: Arc<Rustic>) -> App<Arc<Rustic>> {
         })
 }
 
-fn build_static_app() -> App<()> {
-    App::new()
+fn build_static_app() -> Result<App<()>> {
+    Ok(App::new()
         .middleware(middleware::Logger::default())
-        .handler("/cache", fs::StaticFiles::new(".cache"))
+        .handler("/cache", fs::StaticFiles::new(".cache")?))
 }
 
 pub fn start(config: &HttpConfig, app: Arc<Rustic>) -> Result<()> {
@@ -58,7 +57,7 @@ pub fn start(config: &HttpConfig, app: Arc<Rustic>) -> Result<()> {
         vec![
             build_socket_app(Arc::clone(&app)).boxed(),
             build_api_app(Arc::clone(&app)).boxed(),
-            build_static_app().boxed(),
+            build_static_app().unwrap().boxed(),
         ]
     }).bind(format!("{}:{}", config.ip, config.port))?
     .run();

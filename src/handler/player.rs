@@ -19,28 +19,28 @@ pub fn get_state(rustic: &Arc<Rustic>) -> Result<PlayerModel, Error> {
 }
 
 pub fn control_next(rustic: &Arc<Rustic>) -> Result<(), Error> {
-    let mut player = Arc::clone(&rustic.player);
+    let player = Arc::clone(&rustic.player);
     player.next()?;
 
     Ok(())
 }
 
 pub fn control_prev(rustic: &Arc<Rustic>) -> Result<(), Error> {
-    let mut player = Arc::clone(&rustic.player);
+    let player = Arc::clone(&rustic.player);
     player.prev()?;
 
     Ok(())
 }
 
 pub fn control_pause(rustic: &Arc<Rustic>) -> Result<(), Error> {
-    let mut player = Arc::clone(&rustic.player);
+    let player = Arc::clone(&rustic.player);
     player.set_state(PlayerState::Pause)?;
 
     Ok(())
 }
 
 pub fn control_play(rustic: &Arc<Rustic>) -> Result<(), Error> {
-    let mut player = Arc::clone(&rustic.player);
+    let player = Arc::clone(&rustic.player);
     player.set_state(PlayerState::Play)?;
 
     Ok(())

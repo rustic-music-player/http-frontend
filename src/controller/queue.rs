@@ -14,7 +14,7 @@ pub struct QueuePlaylistQuery {
     playlist_id: usize,
 }
 
-pub fn fetch(req: HttpRequest<Arc<Rustic>>) -> Result<Json<Vec<TrackModel>>> {
+pub fn fetch(req: &HttpRequest<Arc<Rustic>>) -> Result<Json<Vec<TrackModel>>> {
     let rustic = req.state();
     let tracks = queue_handler::fetch(&rustic)?;
 
@@ -39,7 +39,7 @@ pub fn queue_playlist(req: (State<Arc<Rustic>>, Path<QueuePlaylistQuery>)) -> Re
     }
 }
 
-pub fn clear(req: HttpRequest<Arc<Rustic>>) -> Result<Json<()>> {
+pub fn clear(req: &HttpRequest<Arc<Rustic>>) -> Result<Json<()>> {
     let rustic = req.state();
     queue_handler::clear(&rustic)?;
     Ok(Json(()))

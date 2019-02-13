@@ -1,23 +1,23 @@
-use actix::{Recipient, Syn};
-use rustic_core::player::PlayerState;
+use actix::Recipient;
+
 use viewmodels::TrackModel;
 
 #[derive(Message, Clone, Debug, Serialize)]
 #[serde(
-    tag = "type",
-    content = "payload",
-    rename_all = "SCREAMING_SNAKE_CASE"
+tag = "type",
+content = "payload",
+rename_all = "SCREAMING_SNAKE_CASE"
 )]
 pub enum Message {
     PlayerStateChanged(bool),
     CurrentlyPlayingChanged(Option<TrackModel>),
-    QueueUpdated,
+    QueueUpdated(Vec<TrackModel>),
 }
 
 #[derive(Message)]
 #[rtype(String)]
 pub struct Connect {
-    pub addr: Recipient<Syn, Message>,
+    pub addr: Recipient<Message>,
 }
 
 #[derive(Message, Debug)]

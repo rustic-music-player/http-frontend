@@ -1,13 +1,12 @@
 use actix::prelude::*;
 use failure::Error;
-use rustic_core::player::PlayerState;
 use socket::messages;
 use std::collections::HashMap;
 use uuid::Uuid;
 
 #[derive(Default)]
 pub struct SocketServer {
-    pub sessions: HashMap<String, Recipient<Syn, messages::Message>>,
+    pub sessions: HashMap<String, Recipient<messages::Message>>,
 }
 
 impl SocketServer {
@@ -24,7 +23,7 @@ impl Handler<messages::Message> for SocketServer {
     type Result = ();
 
     fn handle(&mut self, msg: messages::Message, _: &mut Context<Self>) {
-        self.broadcast(msg);
+        self.broadcast(msg).unwrap();
     }
 }
 

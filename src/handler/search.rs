@@ -1,7 +1,6 @@
 use failure::Error;
 use rayon::prelude::*;
-use rustic_core::provider::ProviderItem;
-use rustic_core::{Album, Artist, Playlist, Rustic, Track};
+use rustic_core::{Album, Artist, Rustic, Track};
 use std::sync::Arc;
 use viewmodels::*;
 

@@ -1,7 +1,8 @@
+use actix::{Addr, fut};
 use actix::prelude::*;
-use actix::{fut, Addr, Syn};
 use actix_web::ws;
 use serde_json;
+
 use socket::{messages, SocketState};
 
 #[derive(Default, Debug)]
@@ -20,7 +21,7 @@ impl Actor for SocketSession {
         // before processing any other events.
         // HttpContext::state() is instance of WsChatSessionState, state is shared
         // across all routes within application
-        let addr: Addr<Syn, _> = ctx.address();
+        let addr: Addr<_> = ctx.address();
         ctx.state()
             .addr
             .send(messages::Connect {
@@ -60,7 +61,7 @@ impl StreamHandler<ws::Message, ws::ProtocolError> for SocketSession {
         match msg {
             ws::Message::Ping(msg) => ctx.pong(&msg),
             ws::Message::Pong(_) => {}
-            ws::Message::Text(text) => {}
+            ws::Message::Text(_text) => {}
             ws::Message::Binary(_) => warn!("Unexpected binary"),
             ws::Message::Close(_) => {
                 ctx.stop();

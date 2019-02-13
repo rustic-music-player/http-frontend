@@ -44,7 +44,7 @@ pub fn queue_playlist(playlist_id: usize, rustic: &Arc<Rustic>) -> Result<Option
 
 pub fn clear(rustic: &Arc<Rustic>) -> Result<(), Error> {
     debug!("Clearing queue");
-    let mut player = Arc::clone(&rustic.player);
+    let player = Arc::clone(&rustic.player);
     player.clear_queue();
     Ok(())
 }
