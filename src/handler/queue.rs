@@ -14,8 +14,8 @@ pub fn fetch(rustic: &Arc<Rustic>) -> Result<Vec<TrackModel>, Error> {
 
 pub fn queue_track(track_id: usize, rustic: &Arc<Rustic>) -> Result<Option<()>, Error> {
     let library = &rustic.library;
-    debug!("adding track to queue {}", &track_id);
-    let track: Option<Track> = library.get_track(&track_id)?;
+    debug!("adding track to queue {}", track_id);
+    let track: Option<Track> = library.get_track(track_id)?;
     match track {
         Some(track) => {
             let mut player = Arc::clone(&rustic.player);
@@ -29,8 +29,8 @@ pub fn queue_track(track_id: usize, rustic: &Arc<Rustic>) -> Result<Option<()>, 
 
 pub fn queue_playlist(playlist_id: usize, rustic: &Arc<Rustic>) -> Result<Option<()>, Error> {
     let library = &rustic.library;
-    debug!("adding playlist to queue {}", &playlist_id);
-    let playlist: Option<Playlist> = library.get_playlist(&playlist_id)?;
+    debug!("adding playlist to queue {}", playlist_id);
+    let playlist: Option<Playlist> = library.get_playlist(playlist_id)?;
     match playlist {
         Some(playlist) => {
             let mut player = Arc::clone(&rustic.player);
