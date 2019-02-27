@@ -25,7 +25,7 @@ pub fn build_socket_app(rustic: Arc<Rustic>) -> App<SocketState> {
         addr: addr.clone(),
     };
     thread::spawn(move || {
-        let player = Arc::clone(&rustic.player);
+        let player = rustic.get_default_player().ok_or(format_err!("Missing default player")).unwrap();
 
         loop {
             let event = player.observe().recv();
